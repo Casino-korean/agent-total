@@ -1,0 +1,9 @@
+.ant-table-cell {
+  white-space: nowrap !important;
+}
+@media only screen and (max-width: 575.98px) {
+  .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
