@@ -26,6 +26,7 @@ const handleMenuClick = ({ key }) => {
   }
   if ("logout" == key) {
     userStore.logout();
+    window.open(import.meta.env.VITE_APP_ADMIN_URL + "/logout", "_self");
   }
 };
 

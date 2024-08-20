@@ -1,16 +1,17 @@
 <script setup>
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { notification } from "ant-design-vue";
 import api from "@/request/api";
 import request, { handleRequest } from "@/request";
-import { useRouter } from "vue-router";
-import LanguageChange from "@/components/LanguageChange.vue";
-
+import { useRouter, useRoute } from "vue-router";
+import LanguageChange from "@/components/ChangeLanguage.vue";
 import { useI18n } from "vue-i18n";
 const { t: $t } = useI18n({ useScope: "global" });
 
 const router = useRouter();
+const route = useRoute();
+
 const formState = reactive({
   username: "",
   password: "",
@@ -26,6 +27,14 @@ const onFinish = async (values) => {
     $t("Login.noiti_succes")
   );
 };
+
+onMounted(() => {
+  const { token } = route.query
+  if (token) {
+    localStorage.setItem("accessToken", token);
+    router.push("/")
+  }
+});
 </script>
 
 <template>
