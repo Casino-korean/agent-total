@@ -5,7 +5,7 @@ import { notification } from "ant-design-vue";
 import api from "@/request/api";
 import request, { handleRequest } from "@/request";
 import { useRouter, useRoute } from "vue-router";
-import LanguageChange from "@/components/ChangeLanguage.vue";
+import LanguageChange from "@/components/LanguageChange.vue";
 import { useI18n } from "vue-i18n";
 const { t: $t } = useI18n({ useScope: "global" });
 
