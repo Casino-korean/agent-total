@@ -20,7 +20,6 @@ const dataSubmit = reactive({
   username: props.curtableData.username,
   password: '',
   refCode: props.curtableData.refCode,
-  cskh: props.curtableData?.cskh ?? '',
   isDisabled: props.curtableData.isDisabled ?? 0,
   uplineID: props.curtableData.uplineID
 
@@ -40,7 +39,6 @@ async function onChangeAgent() {
   const dataSend = {
     username: dataSubmit.username,
     password: dataSubmit.password,
-    cskh: dataSubmit.cskh,
     isDisabled: dataSubmit.isDisabled
   };
   handleRequest(
@@ -78,6 +76,16 @@ async function onChangeAgent() {
         <a-input
           v-model:value="dataSubmit.password"
         />
+      </a-form-item>
+      <a-form-item
+          :label="$t('User.active')"
+          name="active"
+      >
+         <a-switch
+            v-model:value="dataSubmit.isDisabled"
+            v-model:checked="dataSubmit.isDisabled" :checked-children="$t('Partner.active')" :un-checked-children="$t('Partner.disable')" :checkedValue="0" :unCheckedValue="1"
+          >
+        </a-switch>
       </a-form-item>
 
 <!--      <a-form-item-->

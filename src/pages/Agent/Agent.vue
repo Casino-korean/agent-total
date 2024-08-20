@@ -12,6 +12,7 @@
     <a-button @click="search" type="primary">{{ $t("search") }}</a-button>
     <a-button @click="$router.go(-1)" class="ml-3"><ArrowLeftOutlined></ArrowLeftOutlined></a-button>
   </div>
+  <div class="overflow-y-auto">
   <a-table
     :columns="columns"
     :data-source="tableData.data"
@@ -20,13 +21,90 @@
     @change="handleTableChange"
   >
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name-agent'">
-        <div>{{ record.name }}</div>
-        <a-badge
-          :count="$t('Partner.DlDepoWiAcronym')"
-          v-if="record.isAgentGlobalTransferMoney"
-        />
-      </template>
+      <template v-if="column.dataIndex === 'username'">
+                  <span :style="{ color: '#346597', fontWeight: 700 }">{{
+                    record.username
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'displayName'">
+                  <span :style="{ color: '#346597', fontWeight: 700 }">{{
+                    record.displayName
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'commissionGame'">
+                  <span :style="{ color: 'green', fontWeight: 700}">{{
+                    formatNumber(record?.commissionGame ?? 0)
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'seq'">
+                  <span :style="{ color: '#eca019', fontWeight: 700 }">{{
+                      record.seq
+                  }}</span>
+                </template>
+
+                <template v-if="column.dataIndex === 'phone'">
+                  <span :style="{ color: '#a10ac7', fontWeight: 700 }">{{
+                    record?.phone
+                  }}</span>
+                </template>
+
+                <template v-if="column.dataIndex === 'money'">
+                  <span :style="{ color: 'green', fontWeight: 700 }">{{
+                    formatNumber(record?.money ?? 0)
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'withdrawSum'">
+                  <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+                    formatNumber(record?.withdrawSum ?? 0)
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'depositSum'">
+                  <span :style="{ color: '#2a6395', fontWeight: 700 }">{{
+                    formatNumber(record?.depositSum ?? 0)
+                  }}</span>
+                </template>
+
+                <template v-if="column.dataIndex === 'orderSum'">
+                  <span :style="{ color: '#820293', fontWeight: 700 }">{{
+                    formatNumber(record?.orderSum ?? 0)
+                  }}</span>
+                </template>
+
+                <template v-if="column.dataIndex === 'userSum'">
+                  <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+                    record?.userSum
+                  }}</span>
+               </template>
+
+                 <template v-if="column.dataIndex === 'winLossSum'">
+                  <span :style="{ color: record.winLossSum >= 0 ? 'green' : 'red' , fontWeight: 700 }">{{
+                    formatNumber(record?.winLossSum ?? 0)
+                  }}</span>
+                </template>
+
+                 <template v-if="column.dataIndex === 'vip'">
+                  <span :style="{ color: 'red', fontWeight: 700 }">{{
+                    record?.vip
+                  }}</span>
+                </template>
+
+               <template v-if="column.key === 'parent'">
+                  <span :style="{ color: 'blue', fontWeight: 700 }">{{
+                    record?.agent?.username
+                  }}</span>
+                </template>
+
+                <template v-if="column.dataIndex === 'level'">
+                  <span class="label label-default"> Cấp {{
+                    record.level
+                  }}</span>
+                </template>
+                <template v-if="column.dataIndex === 'isDisabled'">
+                    <a-tag color="success" v-if="!record.isDisabled">{{
+                      genStatus(record.isDisabled)
+                    }}</a-tag>
+                    <a-tag color="red" v-else>{{ genStatus(record.isDisabled) }}</a-tag>
+                  </template>
       <template v-if="column.key === 'action'">
         <a-dropdown>
           <template #overlay>
@@ -49,6 +127,7 @@
       </template>
     </template>
   </a-table>
+  </div>
   <AddAgentModal
     v-if="showCreateModal"
     :agents = "listAgents"
@@ -104,9 +183,18 @@ const columns = [
     title: $t("User.nickName"),
     dataIndex: "displayName",
   },
+  {
+    title: $t("User.parent"),
+    key: "parent",
+  },
    {
     title: $t("User.refernalCode"),
     dataIndex: "refCode",
+  },
+  {
+    title: $t('Transaction.status'),
+    dataIndex: "isDisabled",
+    customRender: ({ text }) => genStatus(text),
   },
    {
     title: $t("User.userSum"),
@@ -260,20 +348,9 @@ const onAgentTransfer = () => {
   getListUser();
 };
 
-// const getListAgentGeneral = async () => {
-//   try {
-//     tableData.loading = true;
-//     const res = await request.get(api.GENERAL_AGENT_LIST, { params: queryParams });
-//     if (res.ok) {
-//       const { total, data } = res.d;
-//       listAgents.value = data;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     tableData.loading = false;
-//   }
-// };
-// getListAgentGeneral();
+const genStatus = (status) => {
+  if (status) return $t('Partner.disable')
+  else return $t('Partner.active')
+}
 getListUser();
 </script>

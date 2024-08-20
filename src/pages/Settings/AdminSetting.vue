@@ -7,7 +7,7 @@
     ></a-input> -->
     <!-- <a-range-picker v-model:value="filterDate" :locale="locale" /> -->
     <!-- <a-button @click="search" type="primary">Tìm kiếm</a-button> -->
-    <a-button @click="isShowAdd=true" type="primary">{{$t('add')}}</a-button>
+<!--    <a-button @click="isShowAdd=true" type="primary">{{$t('add')}}</a-button>-->
   </div>
 
   <div class="overflow-y-auto">

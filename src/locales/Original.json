@@ -85,8 +85,11 @@
     "totalLoss": "Tổng lỗ"
   },
   "User": {
+    "manager": "Quản lý người dùng",
+    "typeAccount": "Loại tài khoản",
     "title": "Người dùng",
     "id": "ID",
+    "parent": "Thuộc",
     "userName": "Tên đăng nhập",
     "nickName": "Tên nhân vật",
     "generalAgent": "Đại lý tổng",
@@ -219,7 +222,7 @@
   },
   "Partner": {
     "title": "Người bán hàng",
-    "listAgent": "DS nhân viên bán hàng",
+    "listAgent": "Sales",
     "listUserOfAgent": "Người chơi bên dưới nhân viên bán hàng",
     "editAgent": "Chỉnh sửa Đại lý",
     "agentPay": "Đại lý chuyển tiền",

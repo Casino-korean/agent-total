@@ -107,16 +107,18 @@ const menuItems = [
   {
     key: "agent",
     icon: () => h(UserAddOutlined),
-    label: $t("Partner.title"),
+    label: $t("User.manager"),
     children: [
       {
         key: "agent",
         label: $t("Partner.listAgent"),
+        icon: () => h(UserAddOutlined),
         routeName: "agent",
       },
       {
         key: "userAgent",
-        label: $t("Partner.listUserOfAgent"),
+        icon: UsergroupAddOutlined,
+        label: $t("User.title"),
         routeName: "userAgent",
       },
     ],
@@ -182,12 +184,12 @@ const menuItems = [
   //   label: $t("LoginHistory.title"),
   //   routeName: "login-logs",
   // },
-      {
-        key: "settings-admin",
-        label: $t("settingAgent"),
-        icon: () => h(TransactionOutlined),
-        routeName: "settings-admin",
-      },
+  //     {
+  //       key: "settings-admin",
+  //       label: $t("settingAgent"),
+  //       icon: () => h(TransactionOutlined),
+  //       routeName: "settings-admin",
+  //     },
 
   // {
   //   key: "settings",

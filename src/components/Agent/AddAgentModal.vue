@@ -45,20 +45,6 @@ const submitAddUser = async () => {
         data[k] = dataSubmit[k];
       }
     });
-    data.cskh = {
-      tele: {
-        isDisabled: 0,
-        linkcskh: '',
-      },
-      livechat: {
-        isDisabled: 0,
-        linkcskh: '',
-      },
-      facebook: {
-        isDisabled: 0,
-        linkcskh: '',
-      }
-    }
     const res = await request.post(api.USER_ADD, data);
     if (res.ok) {
       emit("updated");
