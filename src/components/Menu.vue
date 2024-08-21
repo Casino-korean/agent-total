@@ -64,12 +64,12 @@ const state = reactive({
 });
 
 const menuItems = [
-  // {
-  //   key: "dashboard",
-  //   icon: DashboardFilled,
-  //   label: $t("Dashboard.title"),
-  //   routeName: "dashboard",
-  // },
+  {
+    key: "dashboard",
+    icon: DashboardFilled,
+    label: $t("Dashboard.title"),
+    routeName: "dashboard",
+  },
   // {
   //   key: "users",
   //   icon: UsergroupAddOutlined,
@@ -96,6 +96,7 @@ const menuItems = [
   //   label: $t("Giftcode.title"),
   //   routeName: "giftcode",
   // },
+
 
   // {
   //   key: "general-agent",
@@ -129,18 +130,18 @@ const menuItems = [
   //   label: $t("User.vipMember"),
   //   routeName: "vipMember",
   // },
-  // {
-  //   key: "letter",
-  //   icon: () => h(MessageOutlined),
-  //   label: $t("Letter.title"),
-  //   children: [
-  //     {
-  //       key: "letter-listNormal",
-  //       label: $t("Letter.listLeter"),
-  //       routeName: "letter-listNormal",
-  //     },
-  //   ],
-  // },
+  {
+    key: "letter",
+    icon: () => h(MessageOutlined),
+    label: $t("Letter.title"),
+    children: [
+      {
+        key: "letter-listNormal",
+        label: $t("Letter.listLeter"),
+        routeName: "letter-listNormal",
+      },
+    ],
+  },
 
   // {
   //   key: "agent",
@@ -149,34 +150,41 @@ const menuItems = [
   //   routeName: "agent",
   // },
 
-  // {
-  //   key: "transaction",
-  //   icon: () => h(TransactionOutlined),
-  //   label: $t('Transaction.title'),
-  //   children: [
-  //     {
-  //       key: "transaction-deposit",
-  //       label: $t('deposit'),
-  //       routeName: "transaction-deposit",
-  //     },
-  //     {
-  //       key: "transaction-withdraw",
-  //       label: $t('widtdrwa'),
-  //       routeName: "transaction-withdraw",
-  //     },
-  //
-  //     {
-  //       key: "logtransaction",
-  //       label: $t('log_transaction'),
-  //       routeName: "logtransaction",
-  //     },
-  //     {
-  //       key: "logcommission",
-  //       label: $t('log_commission'),
-  //       routeName: "logcommission",
-  //     },
-  //   ],
-  // },
+  {
+    key: "transaction",
+    icon: () => h(TransactionOutlined),
+    label: $t('Transaction.title'),
+    children: [
+      {
+        key: "transaction-deposit",
+        label: $t('deposit'),
+        routeName: "transaction-deposit",
+      },
+      {
+        key: "transaction-withdraw",
+        label: $t('widtdrwa'),
+        routeName: "transaction-withdraw",
+      },
+
+      {
+        key: "logtransaction",
+        label: $t('log_transaction'),
+        routeName: "logtransaction",
+      },
+      {
+        key: "logcommission",
+        label: $t('log_commission'),
+        routeName: "logcommission",
+      },
+    ],
+  },
+
+    {
+    key: "giftcode-history",
+    icon: CodepenOutlined,
+    label: $t("Giftcode.history"),
+    routeName: "giftcode-history",
+  },
 
   // {
   //   key: "login-logs",

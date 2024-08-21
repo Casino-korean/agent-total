@@ -34,12 +34,21 @@ const routes = [
                 }
             },
 
-            {
-                path: '/giftcode',
-                name: 'giftcode',
-                component: () => import("@/components/GiftCode/GiftCode.vue"),
+            // {
+            //     path: '/giftcode',
+            //     name: 'giftcode',
+            //     component: () => import("@/components/GiftCode/GiftCode.vue"),
+            //     meta: {
+            //         // title: "Giftcode"
+            //     }
+            // },
+
+                      {
+                path: '/giftcode-history',
+                name: 'giftcode-history',
+                component: () => import("@/components/GiftCodeHistory/index.vue"),
                 meta: {
-                    // title: "Giftcode"
+                    // title: "Giftcode History"
                 }
             },
 

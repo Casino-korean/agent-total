@@ -193,6 +193,7 @@
     "noitiPublicSuc": "Gửi thư cho tất cả người dùng thành công."
   },
   "Giftcode": {
+    "history": "Lịch sử Giftcode",
     "title": "Giftcode",
     "type": "Loại",
     "code": "Mã",

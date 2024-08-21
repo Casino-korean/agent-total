@@ -320,7 +320,7 @@
     "namePlayer": "玩家名称",
     "nameAgent": "代理名称",
     "pending": "待处理",
-    "succues": "成功",
+    "success": "成功",
     "loss": "失败"
   },
   "ChangePass": {

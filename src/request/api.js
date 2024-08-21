@@ -2,7 +2,7 @@ export default {
     AUTH_LOGIN: "general-agent/login",
     PASSWORD_CHANGE: "admin/change-password",
 
-    // DASHBOARD: "admin/dashboard",
+    DASHBOARD: "general-agent/dashboard",
 
     // USER_VIP_LIST: "admin/user/list-member-vip",
     // USER_MONEY: "admin/user/add-subtract-money",
@@ -18,11 +18,11 @@ export default {
     AGENT_CHANGE: "general-agent/agent",
     // AGENT_GLOBALTRANSFERMONEY: "admin/agent/global",
     // TRANSACTION: "admin/transaction",
-    // TRANSACTIONS_LIST: "admin/transaction/history",
+    TRANSACTIONS_LIST: "general-agent/transaction/history",
     // TRANSACTIONS_APPROVE: "admin/transaction/approve",
     // TRANSACTIONS_ADD_MONEY: "admin/transaction/add-subtract-money",
     // TRANSACTIONS_TRANSFER_LIST: "admin/transfer/history",
-    // TRANSACTIONS_COMMISSION: "admin/transaction/commission",
+    TRANSACTIONS_COMMISSION: "general-agent/transaction/commission",
 
     CURRENCY_LIST: "admin/currency/list",
 
@@ -52,11 +52,13 @@ export default {
     // GIFTCODE_LIST: "admin/giftcode/lists",
     // GIFTCODE_CREATE: "admin/giftcode/create",
     // GIFTCODE_CHANGE: "admin/giftcode/change",
+    GIFTCODE_HISTORY: "general-agent/giftcode/history/lists",
+    GIFTCODE_APPROVE: "general-agent/giftcode/approve/",
     //
     //
-    // //letter
-    // LETTER_NORMALLIST: "admin/letter/lists",
-    // LETTER_CTEATE: "admin/letter/create",
+    //letter
+    LETTER_NORMALLIST: "general-agent/letter/lists",
+    LETTER_CTEATE: "general-agent/letter/create",
     //
     // ADMIN_BANK: "admin/transaction/banks",
     // ADMIN_HISTORYPAY: "admin/transfer/history",
