@@ -143,12 +143,12 @@ const columns = [
     customRender: ({ text }) => formatDateTime(text),
   },
   //
-  // {
-  //   title: $t("action"),
-  //   key: "action",
-  //   fixed: "right",
-  //   width: 70,
-  // },
+  {
+    title: $t("action"),
+    key: "action",
+    fixed: "right",
+    width: 70,
+  },
 ];
 
 const showReport = ref(false);

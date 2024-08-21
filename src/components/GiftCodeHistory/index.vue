@@ -1,40 +1,35 @@
 <template>
   <div class="flex flex-wrap gap-4 my-2">
-<!--    <a-input-->
-<!--      placeholder="ID"-->
-<!--      class="w-[200px]"-->
-<!--      v-model:value="queryParams.id"-->
-<!--    ></a-input>-->
     <a-input
       :placeholder="$t('searchByUsername')"
       class="w-[200px]"
-      v-model:value="queryParams.username"
+      v-model:value="queryParams.s"
     ></a-input>
-     <a-select
-       :placeholder="$t('Transaction.typeMoney')"
-      :options="optionMoney"
-      class="w-[200px]"
-      v-model:value="queryParams.typeMoney"
-    ></a-select>
-     <a-select
-       :placeholder="$t('Transaction.status')"
-      :options="optionStatus"
-      class="w-[200px]"
-      v-model:value="queryParams.status"
-    ></a-select>
+<!--    <a-select-->
+<!--       :placeholder="$t('Transaction.typeMoney')"-->
+<!--      :options="optionMoney"-->
+<!--      class="w-[200px]"-->
+<!--      v-model:value="queryParams.typeMoney"-->
+<!--    ></a-select>-->
+<!--     <a-select-->
+<!--      :placeholder="$t('Transaction.status')"-->
+<!--      :options="optionStatus"-->
+<!--      class="w-[200px]"-->
+<!--      v-model:value="queryParams.status"-->
+<!--    ></a-select>-->
     <a-range-picker v-model:value="filterDate" :locale="locale" />
     <a-select
       :options="dateOptions"
       v-model:value="dateSelect"
       @change="onChangeSelectDate"
     ></a-select>
-    <a-select
-       :placeholder="$t('Transaction.userType')"
-      :options="optionUserType"
-      class="w-[200px]"
-      v-model:value="queryParams.typeUser"
-    ></a-select>
-    <a-button @click="search" type="primary">{{ $t("search") }}</a-button>
+<!--    <a-select-->
+<!--       :placeholder="$t('Transaction.userType')"-->
+<!--      :options="optionUserType"-->
+<!--      class="w-[200px]"-->
+<!--      v-model:value="queryParams.typeUser"-->
+<!--    ></a-select>-->
+    <a-button @click="search" type="primary"> {{ $t("search") }} </a-button>
     <a-button @click="reload" class="ml-3"><ReloadOutlined></ReloadOutlined></a-button>
     <a-button @click="$router.go(-1)" class="ml-3"><ArrowLeftOutlined></ArrowLeftOutlined></a-button>
   </div>
@@ -46,33 +41,45 @@
       :loading="tableData.loading"
       @change="handleTableChange"
     >
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'bank'">
-          <div>
-            {{ $t("bank") }} :
-            <b>{{ record.bankName }}</b>
-          </div>
-          <div>
-            {{ $t("acountNumber") }} :
-            <b>{{ record.accountNumber }}</b>
-          </div>
-          <div>
-            {{ $t("useBank") }} :
-            <b>{{ record.accountName }}</b>
-          </div>
-          <div>
-            {{ $t("Letter.content") }} :
-            <b>{{ record.content }}</b>
-          </div>
-        </template>
+      <template #bodyCell="{ column, record, index }">
+<!--        <template v-if="column.key === 'stt'">-->
+<!--          <span> {{index + 1 + (pagination.current-1)*pagination.pageSize}}</span>-->
+<!--        </template>-->
+<!--        <template v-if="column.key === 'bank'">-->
+<!--          <div>-->
+<!--            {{ $t("bank") }} :-->
+<!--            <b>{{ record.bankName }}</b>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            {{ $t("acountNumber") }} :-->
+<!--            <b>{{ record.accountNumber }}</b>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            {{ $t("useBank") }} :-->
+<!--            <b>{{ record.accountName }}</b>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            {{ $t("Letter.content") }} :-->
+<!--            <b>{{ record.content }}</b>-->
+<!--          </div>-->
+<!--        </template>-->
         <template v-if="column.key === 'status'">
           <a-badge
             :count="statusText(record.status)"
             :number-style="{ backgroundColor: statusColor(record.status) }"
           />
         </template>
+          <template v-if="column.key === 'amount'">
+         <span> {{formatNumber(record.user?.money)}}</span>
+        </template>
+        <template v-if="column.dataIndex === 'money'">
+         <span style="color: green"> {{formatNumber(record.money)}}</span>
+        </template>
+        <template v-if="column.key === 'gift_code'">
+         <span> {{record.gift_code?.code}}</span>
+        </template>
         <template v-if="column.key === 'action'">
-          <TransactionAction
+          <GiftCodeAction
             :data="record"
             @updated="(e) => onUpdated(record, e)"
           />
@@ -89,55 +96,56 @@ import { formatNumber, formatDateTime } from "@/helpers/format";
 import {ArrowLeftOutlined, ReloadOutlined} from "@ant-design/icons-vue";
 import locale from "ant-design-vue/es/date-picker/locale/vi_VN";
 import dayjs from "dayjs";
-import TransactionAction from "@/components/Transactions/TransactionAction.vue";
 
 import { useI18n } from "vue-i18n";
+import GiftCodeAction from "@components/GiftCodeHistory/GiftCodeAction.vue";
 const { t: $t } = useI18n({ useScope: "global" });
 
 const columns = [
+  //  {
+  //   title: "STT",
+  //   key: "stt"
+  // },
   {
     title: $t("User.title"),
     dataIndex: "user",
-    customRender: ({ text: user }) => user.username,
+    customRender: ({ text: user }) => user?.username,
   },
   {
     title: $t("User.nickName"),
     dataIndex: "user",
-    customRender: ({ text: user }) => user.displayName,
+    customRender: ({ text: user }) => user?.displayName,
+  },
+  {
+    title: $t("User.wallet"),
+    key: "amount"
   },
 
   {
-    title: $t("LoginHistory.surplus"),
-    dataIndex: "balance",
-    customRender: ({ text }) => formatNumber(text),
+    title: $t("Giftcode.code"),
+    key: "gift_code",
   },
 
   {
     title: $t("Giftcode.amountOfMoney"),
-    dataIndex: "amount",
+    dataIndex: "money",
     customRender: ({ text }) => formatNumber(text),
-  },
-
-  {
-    title: $t("Transaction.typeMoney"),
-    dataIndex: "typeMoney",
-    customRender: ({ text }) => text?.toUpperCase(),
   },
 
   {
     title: $t("Bank.status"),
     key: "status",
   },
-
-  {
-    title: $t("Partner.address"),
-    key: "bank",
-  },
-
-  {
-    title: $t("Transaction.note"),
-    dataIndex: "note",
-  },
+  //
+  // {
+  //   title: $t("Partner.address"),
+  //   key: "bank",
+  // },
+  //
+  // {
+  //   title: $t("Transaction.note"),
+  //   dataIndex: "note",
+  // },
   {
     title: $t("createDate"),
     dataIndex: "createdAt",
@@ -180,9 +188,6 @@ const dateOptions = [
     startDate: () => "",
   },
 ];
-
-const dateSelect = ref(dateOptions[2].value);
-
 const optionStatus = [
     { value: 1, label: $t("success") },
     { value: 2, label: $t("lose") },
@@ -199,7 +204,7 @@ const optionUserType = [
     { value: 'user', label: $t("user") },
     { value: 'agent', label: $t("agent") },
 ];
-
+const dateSelect = ref(dateOptions[2].value);
 
 function onChangeSelectDate(value, option) {
   filterDate.value[0] = option.startDate();
@@ -212,10 +217,10 @@ const queryParams = reactive({
     filterDate.value[0].format("YYYY-MM-DD 00:00:00")
   ).toISOString(),
   to: new Date(filterDate.value[1].format("YYYY-MM-DD 23:59:59")).toISOString(),
-  username: null,
-  status: null,
-  typeMoney: null,
-  typeUser: null
+  s: null
+  // status: null,
+  // typeMoney: null,
+  // typeUser: null
 });
 
 const tableData = reactive({
@@ -230,10 +235,10 @@ const pagination = computed(() => ({
   pageSize: queryParams.limit,
 }));
 
-const getTransactionList = async () => {
+const getHistoryUseGift = async () => {
   try {
     tableData.loading = true;
-    const res = await request.get(api.TRANSACTIONS_LIST + "/withdraw", {
+    const res = await request.get(api.GIFTCODE_HISTORY,{
       params: queryParams,
     });
     if (res.ok) {
@@ -253,12 +258,21 @@ const handleTableChange = async (pag, _, __) => {
   queryParams.page = current;
   queryParams.limit = pageSize;
   tableData.total = total;
-  getTransactionList();
+  await getHistoryUseGift();
 };
 
-const onCloseHistory = () => {
-  showHistory.value = false;
-};
+const reload = () => {
+  filterDate.value = [dayjs().startOf("month"), dayjs()];
+  dateSelect.value = dateOptions[2].value;
+  queryParams.from = new Date(
+    filterDate.value[0].format("YYYY-MM-DD 00:00:00")
+  ).toISOString();
+  queryParams.to = new Date(
+    filterDate.value[1].format("YYYY-MM-DD 23:59:59")
+  ).toISOString();
+  queryParams.s = null;
+  getHistoryUseGift();
+}
 
 const search = () => {
   if (filterDate.value) {
@@ -270,7 +284,7 @@ const search = () => {
     ).toISOString();
   }
   queryParams.page = 1;
-  getTransactionList();
+  getHistoryUseGift();
 };
 
 function statusText(status) {
@@ -284,22 +298,6 @@ function statusText(status) {
     default:
       return status;
   }
-}
-
-const reload = () => {
-  filterDate.value = [dayjs().startOf("month"), dayjs()];
-  dateSelect.value = dateOptions[2].value;
-  queryParams.from = new Date(
-    filterDate.value[0].format("YYYY-MM-DD 00:00:00")
-  ).toISOString();
-  queryParams.to = new Date(
-    filterDate.value[1].format("YYYY-MM-DD 23:59:59")
-  ).toISOString();
-  queryParams.username = null;
-  queryParams.typeUser = null;
-  queryParams.status = null;
-  queryParams.typeMoney = null;
-  getTransactionList();
 }
 
 function statusColor(status) {
@@ -316,8 +314,8 @@ function statusColor(status) {
 }
 
 function onUpdated(record, payload) {
-  getTransactionList();
+  getHistoryUseGift();
 }
 
-getTransactionList();
+getHistoryUseGift();
 </script>

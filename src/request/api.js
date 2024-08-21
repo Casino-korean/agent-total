@@ -19,8 +19,8 @@ export default {
     // AGENT_GLOBALTRANSFERMONEY: "admin/agent/global",
     // TRANSACTION: "admin/transaction",
     TRANSACTIONS_LIST: "general-agent/transaction/history",
-    // TRANSACTIONS_APPROVE: "admin/transaction/approve",
-    // TRANSACTIONS_ADD_MONEY: "admin/transaction/add-subtract-money",
+    TRANSACTIONS_APPROVE: "general-agent/transaction/approve",
+    TRANSACTIONS_ADD_MONEY: "general-agent/transaction/add-subtract-money",
     // TRANSACTIONS_TRANSFER_LIST: "admin/transfer/history",
     TRANSACTIONS_COMMISSION: "general-agent/transaction/commission",
 

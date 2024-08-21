@@ -19,15 +19,9 @@ const emit = defineEmits(["updated"]);
 const showApproveModal = ref(false);
 const showMoneyModal = ref(false);
 const showDeleteTrans = ref(false);
-const currentTrans = ref(null)
 const approvalData = reactive({
   status: null,
-  note: "",
 });
-const optionMoney = [
-    { value: 'vnd', label: $t("vnd") },
-    { value: 'usdt', label: $t("usdt") },
-];
 
 const optionType = [
     { value: 1, label: $t("Transaction.up") },
@@ -64,7 +58,7 @@ function handleClickMenu(e) {
 async function submitApproval() {
   try {
     const res = await request.post(
-      api.TRANSACTIONS_APPROVE + `/${props.data._id}`,
+      api.GIFTCODE_APPROVE + `${props.data._id}`,
       approvalData
     );
     if (res.ok) {
@@ -149,10 +143,10 @@ function approveTransaction(status) {
           <CheckCircleOutlined />
           {{ $t("Transaction.Approve") }}
         </a-menu-item>
-        <a-menu-item @click="showDeleteTrans = true">
-          <DeleteOutlined />
-          {{ $t("delete") }}
-        </a-menu-item>
+<!--        <a-menu-item @click="showDeleteTrans = true">-->
+<!--          <DeleteOutlined />-->
+<!--          {{ $t("delete") }}-->
+<!--        </a-menu-item>-->
 <!--        <a-menu-item key="money">-->
 <!--          <DollarOutlined />-->
 <!--          {{ $t("User.DeleteAddMoney") }}-->
@@ -171,7 +165,7 @@ function approveTransaction(status) {
       </div>
       <div>
         {{ $t("Giftcode.amountOfMoney") }} :
-        <b>{{ formatNumber(data.amount) }}</b>
+        <b>{{ formatNumber(data.money) }}</b>
       </div>
       <a-input
         :placeholder="$t('Transaction.enterNote')"
@@ -188,63 +182,63 @@ function approveTransaction(status) {
       >
     </template>
   </a-modal>
-  <a-modal v-model:open="showDeleteTrans" title="Xóa giao dịch">
-    <p>Bạn có chắc muốn xóa giao dịch này?</p>
-    <template #footer>
-       <a-button @click="() => showDeleteTrans = false"
-        >Hủy</a-button
-      >
-      <a-button type="primary" @click="() => deleteTransaction()"
-        >Xác nhận</a-button
-      >
-    </template>
-  </a-modal>
-  <a-modal v-model:open="showMoneyModal" :title="$t('Transaction.edit_money')">
-    <div class="flex flex-col gap-2">
-<!--       <a-form-item :label="$t('Transaction.edit_money')" name="location" class="custom-label">-->
+<!--  <a-modal v-model:open="showDeleteTrans" title="Xóa giao dịch">-->
+<!--    <p>Bạn có chắc muốn xóa giao dịch này?</p>-->
+<!--    <template #footer>-->
+<!--       <a-button @click="() => showDeleteTrans = false"-->
+<!--        >Hủy</a-button-->
+<!--      >-->
+<!--      <a-button type="primary" @click="() => deleteTransaction()"-->
+<!--        >Xác nhận</a-button-->
+<!--      >-->
+<!--    </template>-->
+<!--  </a-modal>-->
+<!--  <a-modal v-model:open="showMoneyModal" :title="$t('Transaction.edit_money')">-->
+<!--    <div class="flex flex-col gap-2">-->
+<!--&lt;!&ndash;       <a-form-item :label="$t('Transaction.edit_money')" name="location" class="custom-label">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a-input&ndash;&gt;-->
+<!--&lt;!&ndash;          :placeholder="$t('User.ipMoney')"&ndash;&gt;-->
+<!--&lt;!&ndash;          v-model:value="moneyData.amount"&ndash;&gt;-->
+<!--&lt;!&ndash;        ></a-input>&ndash;&gt;-->
+<!--&lt;!&ndash;      </a-form-item>&ndash;&gt;-->
+
+<!--      <a-form-item :label="$t('Transaction.amount')" name="location" class="custom-label">-->
 <!--        <a-input-->
 <!--          :placeholder="$t('User.ipMoney')"-->
 <!--          v-model:value="moneyData.amount"-->
 <!--        ></a-input>-->
 <!--      </a-form-item>-->
+<!--      <a-form-item :label="$t('Transaction.note')" name="location" class="custom-label">-->
+<!--        <a-input-->
+<!--          :placeholder="$t('Transaction.enterNote')"-->
+<!--          v-model:value="moneyData.note"-->
+<!--        ></a-input>-->
+<!--      </a-form-item>-->
+<!--      <a-form-item :label="$t('Transaction.up_or_down')" name="location" class="custom-label">-->
+<!--        <a-select-->
+<!--        :options="optionType"-->
+<!--        class="w-[200px]"-->
+<!--        v-model:value="moneyData.type"-->
+<!--      ></a-select>-->
+<!--      </a-form-item>-->
+<!--      <a-form-item :label="$t('Transaction.typeMoney')" name="location" class="custom-label">-->
+<!--         <a-select-->
+<!--        :options="optionMoney"-->
+<!--          class="w-[200px]"-->
+<!--          v-model:value="moneyData.typeMoney"-->
+<!--        ></a-select>-->
+<!--      </a-form-item>-->
+<!--    </div>-->
 
-      <a-form-item :label="$t('Transaction.amount')" name="location" class="custom-label">
-        <a-input
-          :placeholder="$t('User.ipMoney')"
-          v-model:value="moneyData.amount"
-        ></a-input>
-      </a-form-item>
-      <a-form-item :label="$t('Transaction.note')" name="location" class="custom-label">
-        <a-input
-          :placeholder="$t('Transaction.enterNote')"
-          v-model:value="moneyData.note"
-        ></a-input>
-      </a-form-item>
-      <a-form-item :label="$t('Transaction.up_or_down')" name="location" class="custom-label">
-        <a-select
-        :options="optionType"
-        class="w-[200px]"
-        v-model:value="moneyData.type"
-      ></a-select>
-      </a-form-item>
-      <a-form-item :label="$t('Transaction.typeMoney')" name="location" class="custom-label">
-         <a-select
-        :options="optionMoney"
-          class="w-[200px]"
-          v-model:value="moneyData.typeMoney"
-        ></a-select>
-      </a-form-item>
-    </div>
-
-    <template #footer>
-      <a-button type="primary" danger @click="() => showMoneyModal=false">{{
-        $t("cancel")
-      }}</a-button>
-      <a-button type="primary" @click="() => submitMoney()">{{
-        $t("save")
-      }}</a-button>
-    </template>
-  </a-modal>
+<!--    <template #footer>-->
+<!--      <a-button type="primary" danger @click="() => showMoneyModal=false">{{-->
+<!--        $t("cancel")-->
+<!--      }}</a-button>-->
+<!--      <a-button type="primary" @click="() => submitMoney()">{{-->
+<!--        $t("save")-->
+<!--      }}</a-button>-->
+<!--    </template>-->
+<!--  </a-modal>-->
 </template>
 
 <style type="text/css">
