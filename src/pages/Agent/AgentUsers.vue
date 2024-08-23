@@ -287,12 +287,12 @@ const columns = [
     dataIndex: "createdAt",
     customRender: ({ text }) => formatDateTime(text),
   },
-  // {
-  //   title: $t("User.action"),
-  //   key: "action",
-  //   fixed: "right",
-  //   width: 70,
-  // },
+  {
+    title: $t("User.action"),
+    key: "action",
+    fixed: "right",
+    width: 70,
+  },
 ];
 
 const curtableData = ref({});

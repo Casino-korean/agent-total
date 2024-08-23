@@ -6,7 +6,7 @@ export default {
 
     // USER_VIP_LIST: "admin/user/list-member-vip",
     // USER_MONEY: "admin/user/add-subtract-money",
-    // USER_EDIT: "admin/user",
+    USER_EDIT: "general-agent/general-user",
 
     USER_ADD: "general-agent/agent",
     USER_LIST: "general-agent/user/lists",
@@ -60,10 +60,10 @@ export default {
     LETTER_NORMALLIST: "general-agent/letter/lists",
     LETTER_CTEATE: "general-agent/letter/create",
     //
-    // ADMIN_BANK: "admin/transaction/banks",
+    ADMIN_BANK: "general-agent/transaction/banks",
     // ADMIN_HISTORYPAY: "admin/transfer/history",
     // ADMIN_EDITINFOBANK: "admin/transaction/config",
-    // USER_HISTORYPLAY: "admin/order/history",
+    USER_HISTORYPLAY: "general-agent/order/history",
     //
     // // login logs
     // LOGIN_LOGS: "admin/history/login",

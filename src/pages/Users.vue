@@ -6,21 +6,21 @@
 <!--      class="w-[200px]"-->
 <!--      v-model:value="queryParams.id"-->
 <!--    ></a-input>-->
-    <a-input
-      :placeholder="$t('searchByUsername')"
-      class="w-[200px]"
-      v-model:value="queryParams.s"
-    ></a-input>
+<!--    <a-input-->
+<!--      :placeholder="$t('searchByUsername')"-->
+<!--      class="w-[200px]"-->
+<!--      v-model:value="queryParams.s"-->
+<!--    ></a-input>-->
     <a-input
       :placeholder="$t('userAgent')"
       class="w-[200px]"
       v-model:value="queryParams.agent"
     ></a-input>
      <a-input
-      :placeholder="'VIP'"
+      :placeholder="'Level'"
       class="w-[200px]"
       type="number"
-      v-model:value="queryParams.vip"
+      v-model:value="queryParams.level"
     ></a-input>
     <a-range-picker v-model:value="filterDate" :locale="locale" />
     <a-select
@@ -40,9 +40,84 @@
       @change="handleTableChange"
     >
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'vip'">
-          <span>{{record?.vip || 0 }}</span>
-        </template>
+        <template v-if="column.dataIndex === 'username'">
+            <span :style="{ color: '#346597', fontWeight: 700 }">{{
+              record.username
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'displayName'">
+            <span :style="{ color: '#346597', fontWeight: 700 }">{{
+              record.displayName
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'commissionGame'">
+            <span :style="{ color: 'green', fontWeight: 700}">{{
+              formatNumber(record?.commissionGame ?? 0)
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'seq'">
+            <span :style="{ color: '#eca019', fontWeight: 700 }">{{
+                record.seq
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'phone'">
+            <span :style="{ color: '#a10ac7', fontWeight: 700 }">{{
+              record?.phone
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'money'">
+            <span :style="{ color: 'green', fontWeight: 700 }">{{
+              formatNumber(record?.money ?? 0)
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'withdrawSum'">
+            <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+              formatNumber(record?.withdrawSum ?? 0)
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'depositSum'">
+            <span :style="{ color: '#2a6395', fontWeight: 700 }">{{
+              formatNumber(record?.depositSum ?? 0)
+            }}</span>
+          </template>
+
+           <template v-if="column.dataIndex === 'vip'">
+            <span :style="{ color: 'red', fontWeight: 700 }">{{
+              record?.vip
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'orderSum'">
+            <span :style="{ color: '#820293', fontWeight: 700 }">{{
+              formatNumber(record?.orderSum ?? 0)
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'userSum'">
+            <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+              record?.userSum
+            }}</span>
+          </template>
+
+          <template v-if="column.key === 'role'">
+            <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+              record?.role === 'user' ? 'Người chơi' : 'Sale'
+            }}</span>
+          </template>
+
+           <template v-if="column.dataIndex === 'winLossSum'">
+            <span :style="{ color: record.winLossSum >= 0 ? 'green' : 'red' , fontWeight: 700 }">{{
+              formatNumber(record?.winLossSum ?? 0)
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'level'">
+            <span class="label label-default"> Cấp {{
+              record.level
+            }}</span>
+          </template>
         <template v-if="column.key === 'action'">
           <!-- <UserAction :data="record" @updated="(e) => onUpdated(record, e)" /> -->
           <!-- <SendPrivateLetter
@@ -63,10 +138,6 @@
                 <a-menu-item key="history" @click="onEditUserClicked(record)">
                   <EditOutlined />
                   {{ $t("edit") }}
-                </a-menu-item>
-                <a-menu-item key="history" @click="onAddMoneyClicked(record)">
-                   <DollarOutlined />
-                {{ $t("User.DeleteAddMoney") }}
                 </a-menu-item>
               </a-menu>
             </template>
@@ -97,48 +168,22 @@
     :curtableData="curtableData"
   />
 
-  <AddUserModal
-    v-if="showAddUserModal"
-    @close="showAddUserModal = false"
-    @updated="onUpdated"
-  />
-
-  <a-modal v-model:open="showAddMoneyModal" :title="$t('User.DeleteAddMoney') + ' ' +  curtableData.username">
-    <div class="flex flex-col gap-2">
-       <a-form-item :label="$t('Giftcode.amountOfMoney')" name="name">
-        <a-input v-model:value="moneyData" />
-      </a-form-item>
-      <a-form-item :label="$t('Transaction.note')" name="name">
-        <a-input v-model:value="note" />
-      </a-form-item>
-<!--      <a-input-->
-<!--        placeholder="Nhập số tiền"-->
-<!--        v-model:value="moneyData"-->
-<!--      ></a-input>-->
-    </div>
-
-    <template #footer>
-      <a-button type="primary" danger @click="() => submitMoney(-1)"
-        >Trừ tiền</a-button
-      >
-      <a-button type="primary" @click="() => submitMoney(1)"
-        >Cộng tiền</a-button
-      >
-    </template>
-  </a-modal>
+<!--  <AddUserModal-->
+<!--    v-if="showAddUserModal"-->
+<!--    @close="showAddUserModal = false"-->
+<!--    @updated="onUpdated"-->
+<!--  />-->
 </template>
 <script setup>
 import { reactive, computed, ref } from "vue";
 import request from "@/request";
 import api from "@/request/api";
 import { formatNumber, formatDateTime } from "@/helpers/format";
-import { notification } from "ant-design-vue";
 import locale from "ant-design-vue/es/date-picker/locale/vi_VN";
 import dayjs from "dayjs";
 import HistoryPlay from "@/components/Users/HistoryPlay.vue";
 import ModalSendLetterPrivate from "@/components/Letter/ModalSendLetterPrivate.vue";
 import EditUserModal from "@/components/Users/EditUserModal.vue";
-import AddUserModal from "@/components/Users/AddUserModal.vue"
 
 import { useI18n } from "vue-i18n";
 const { t: $t } = useI18n({ useScope: "global" });
@@ -147,8 +192,7 @@ import {
   MoreOutlined,
   HistoryOutlined,
   EditOutlined,
-  MessageOutlined,
-  DollarOutlined, ArrowLeftOutlined
+  MessageOutlined, ArrowLeftOutlined,
 } from "@ant-design/icons-vue";
 
 const columns = [
@@ -165,8 +209,8 @@ const columns = [
     dataIndex: "displayName",
   },
   {
-    title: $t("User.phoneNumber"),
-    dataIndex: "phone",
+    title: $t("User.typeAccount"),
+    key: "role",
   },
   {
     title: $t("User.vip"),
@@ -180,11 +224,16 @@ const columns = [
     title: $t("User.userSum"),
     dataIndex: "userSum",
   },
+
   {
-    title: $t("User.wallet"),
-    dataIndex: "money",
-    customRender: ({ text }) => formatNumber(text),
+    title: $t("User.level"),
+    dataIndex: "level"
   },
+  // {
+  //   title: $t("User.wallet"),
+  //   dataIndex: "money",
+  //   customRender: ({ text }) => formatNumber(text),
+  // },
   {
     title: $t("User.totalDeposit"),
     dataIndex: "depositSum",
@@ -215,35 +264,29 @@ const columns = [
   //   dataIndex: "gameSum",
   //   customRender: ({ text }) => formatNumber(text),
   // },
+  {
+    title: $t("User.moneyFromGiftcode"),
+    dataIndex: "giftcodeSum",
+    customRender: ({ text }) => formatNumber(text),
+  },
   // {
-  //   title: $t("User.moneyFromGiftcode"),
-  //   dataIndex: "giftcodeSum",
-  //   customRender: ({ text }) => formatNumber(text),
+  //   title: $t("User.bankName"),
+  //   dataIndex: "bankName",
   // },
-  {
-    title: $t("User.bankName"),
-    dataIndex: "bankName",
-  },
-  {
-    title: $t("User.accountNumber"),
-    dataIndex: "accountNumber",
-  },
-  {
-    title: $t("User.accountName"),
-    dataIndex: "accountName",
-  },
+  // {
+  //   title: $t("User.accountNumber"),
+  //   dataIndex: "accountNumber",
+  // },
+  // {
+  //   title: $t("User.accountName"),
+  //   dataIndex: "accountName",
+  // },
 
   {
     title: $t("User.accountCreateDate"),
     dataIndex: "createdAt",
     customRender: ({ text }) => formatDateTime(text),
   },
-
-  {
-    title: $t("User.level"),
-    dataIndex: "level"
-  },
-
   {
     title: $t("User.action"),
     key: "action",
@@ -254,8 +297,6 @@ const columns = [
 
 const curtableData = ref({});
 const showModalHistoryPlay = ref(false);
-const moneyData = ref(0);
-const note = ref('');
 const onHistoryPlay = (value) => {
   curtableData.value = value;
   showModalHistoryPlay.value = true;
@@ -268,15 +309,9 @@ const onSendLetterPrivate = (value) => {
 };
 
 const showEditModal = ref(false);
-const showAddMoneyModal = ref(false);
 const onEditUserClicked = (value) => {
   curtableData.value = value;
   showEditModal.value = true;
-};
-
-const onAddMoneyClicked = (value) => {
-  curtableData.value = value;
-  showAddMoneyModal.value = true;
 };
 
 const showAddUserModal = ref(false);
@@ -353,7 +388,7 @@ const handleTableChange = async (pag, _, __) => {
   queryParams.page = current;
   queryParams.limit = pageSize;
   tableData.total = total;
-  getListUser();
+  await getListUser();
 };
 
 const search = () => {
@@ -374,35 +409,22 @@ function onUpdated() {
   getListUser();
 }
 
-const submitMoney = async (type) => {
-  try {
-    const data = {
-      amount: Number(type * moneyData.value),
-      type: type === 1 ? 'deposit' : 'withdraw',
-      note: note.value
-    };
-    const res = await request.patch(
-        api.TRANSACTIONS_ADD_MONEY + `/${curtableData.value._id}`,
-        data
-    );
-    if (res.ok) {
-      notification.success({
-        message: "Duyệt giao dịch thành công",
-      });
-      showAddMoneyModal.value = false;
-      moneyData.value = 0
-      await getListUser()
-    } else {
-       notification.error({
-        message: res.message,
-      });
-    }
-  } catch (error) {
-      notification.error({
-      message: error.message,
-    });
-  }
-}
-
 getListUser();
 </script>
+<style lang="scss">
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.label-default {
+  background-color: #6c757d;
+}
+</style>
