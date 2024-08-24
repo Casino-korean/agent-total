@@ -193,8 +193,10 @@
     "noitiPublicSuc": "Gửi thư cho tất cả người dùng thành công."
   },
   "Giftcode": {
-    "history": "Lịch sử Giftcode",
     "title": "Giftcode",
+    "listGiftcode": "Danh sách Giftcode",
+    "listUseGiftcode": "Lịch sử sử dụng",
+    "history": "Lịch sử Giftcode",
     "type": "Loại",
     "code": "Mã",
     "amount": "Mệnh giá",

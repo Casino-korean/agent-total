@@ -4,7 +4,7 @@ export default {
 
     DASHBOARD: "general-agent/dashboard",
 
-    // USER_VIP_LIST: "admin/user/list-member-vip",
+    USER_VIP_LIST: "general-agent/user/list-member-vip",
     // USER_MONEY: "admin/user/add-subtract-money",
     USER_EDIT: "general-agent/general-user",
 

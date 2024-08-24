@@ -4,14 +4,10 @@
       width: state.collapsed ? 'auto' : '256px',
       height: '100vh',
       background: '#001529',
-      overflowY: 'scroll'
+      overflowY: 'scroll',
     }"
   >
-    <a-button
-      type="primary"
-      class="mt-2 mb-2 ml-1"
-      @click="toggleCollapsed"
-    >
+    <a-button type="primary" class="mt-2 mb-2 ml-1" @click="toggleCollapsed">
       <MenuUnfoldOutlined v-if="state.collapsed" />
       <MenuFoldOutlined v-else />
     </a-button>
@@ -44,7 +40,7 @@ import {
   DollarCircleOutlined,
   FacebookFilled,
   AndroidFilled,
-  GoogleOutlined
+  GoogleOutlined,
 } from "@ant-design/icons-vue";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
@@ -97,7 +93,6 @@ const menuItems = [
   //   routeName: "giftcode",
   // },
 
-
   // {
   //   key: "general-agent",
   //   icon: UserAddOutlined,
@@ -122,14 +117,14 @@ const menuItems = [
         label: $t("User.title"),
         routeName: "userAgent",
       },
+      {
+        key: "vipMember",
+        icon: UserAddOutlined,
+        label: $t("User.vipMember"),
+        routeName: "vipMember",
+      },
     ],
   },
-  // {
-  //   key: "vipMember",
-  //   icon: UserAddOutlined,
-  //   label: $t("User.vipMember"),
-  //   routeName: "vipMember",
-  // },
   {
     key: "letter",
     icon: () => h(MessageOutlined),
@@ -153,37 +148,48 @@ const menuItems = [
   {
     key: "transaction",
     icon: () => h(TransactionOutlined),
-    label: $t('Transaction.title'),
+    label: $t("Transaction.title"),
     children: [
       {
         key: "transaction-deposit",
-        label: $t('deposit'),
+        label: $t("deposit"),
         routeName: "transaction-deposit",
       },
       {
         key: "transaction-withdraw",
-        label: $t('widtdrwa'),
+        label: $t("widtdrwa"),
         routeName: "transaction-withdraw",
       },
 
       {
         key: "logtransaction",
-        label: $t('log_transaction'),
+        label: $t("log_transaction"),
         routeName: "logtransaction",
       },
       {
         key: "logcommission",
-        label: $t('log_commission'),
+        label: $t("log_commission"),
         routeName: "logcommission",
       },
     ],
   },
 
-    {
-    key: "giftcode-history",
-    icon: CodepenOutlined,
-    label: $t("Giftcode.history"),
-    routeName: "giftcode-history",
+  {
+    key: "giftCodes",
+    icon: () => h(TransactionOutlined),
+    label: $t("Giftcode.title"),
+    children: [
+      // {
+      //   key: "giftcode-list",
+      //   label: $t("Giftcode.listGiftcode"),
+      //   routeName: "giftcode-list",
+      // },
+      {
+        key: "giftcode-use-list",
+        label: $t("Giftcode.listUseGiftcode"),
+        routeName: "giftcode-use-list",
+      },
+    ]
   },
 
   // {
@@ -254,7 +260,7 @@ const menuItems = [
   //     },
   //   ],
   // },
-  
+
   // {
   //   key: "play-hisotry",
   //   icon: HistoryOutlined,
@@ -275,7 +281,7 @@ const menuItems = [
   //   label: $t("popupPrompt"),
   //   routeName: "popup-prompt",
   // },
-  
+
   // {
   //   key: "games",
   //   icon: () => h(TransactionOutlined),

@@ -43,9 +43,9 @@ const routes = [
             //     }
             // },
 
-                      {
-                path: '/giftcode-history',
-                name: 'giftcode-history',
+            {
+                path: '/giftcode-use-list',
+                name: 'giftcode-use-list',
                 component: () => import("@/components/GiftCodeHistory/index.vue"),
                 meta: {
                     // title: "Giftcode History"
@@ -157,7 +157,7 @@ const routes = [
                 meta: {
                     // title: "Chuyển tiền"
                     // title: "Transfer money"
-                   }
+                }
             },
 
             {
@@ -167,7 +167,7 @@ const routes = [
                 meta: {
                     // title: "Chuyển tiền"
                     // title: "Transfer money"
-                   }
+                }
             },
 
             {
@@ -238,7 +238,7 @@ const routes = [
                 }
             },
 
-            
+
             {
                 path: '/fanpage',
                 name: 'fanpage',
