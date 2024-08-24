@@ -48,10 +48,11 @@ export default {
     // UTIL_UPLOAD: "util/upload",
     //
     // //giftCode
-    // GIFTCODE: "admin/giftcode",
-    // GIFTCODE_LIST: "admin/giftcode/lists",
-    // GIFTCODE_CREATE: "admin/giftcode/create",
-    // GIFTCODE_CHANGE: "admin/giftcode/change",
+    GIFTCODE: "general-agent/giftcode",
+    GIFTCODE_LIST: "general-agent/giftcode/lists",
+    GIFTCODE_CREATE: "general-agent/giftcode/create",
+    GIFTCODE_CHANGE: "general-agent/giftcode/change",
+
     GIFTCODE_HISTORY: "general-agent/giftcode/history/lists",
     GIFTCODE_APPROVE: "general-agent/giftcode/approve/",
     //

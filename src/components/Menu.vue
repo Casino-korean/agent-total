@@ -179,11 +179,11 @@ const menuItems = [
     icon: () => h(TransactionOutlined),
     label: $t("Giftcode.title"),
     children: [
-      // {
-      //   key: "giftcode-list",
-      //   label: $t("Giftcode.listGiftcode"),
-      //   routeName: "giftcode-list",
-      // },
+      {
+        key: "giftcode-list",
+        label: $t("Giftcode.listGiftcode"),
+        routeName: "giftcode-list",
+      },
       {
         key: "giftcode-use-list",
         label: $t("Giftcode.listUseGiftcode"),

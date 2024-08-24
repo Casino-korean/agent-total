@@ -20,6 +20,7 @@ const formData = reactive({
   timeEnd: props.curtableData.timeEnd,
   count: props.curtableData.count,
   amount: props.curtableData.amount,
+  event: props.curtableData.event
 });
 const createAccountForm = ref(null);
 
@@ -31,6 +32,7 @@ async function onChangeGiftcode() {
     timeEnd: formData.timeEnd,
     count: formData.count,
     amount: formData.amount,
+    event: formData.event,
   };
   handleRequest(
     request.put(api.GIFTCODE_CHANGE + `/${props.curtableData._id}`, submitData),
@@ -54,7 +56,16 @@ async function onChangeGiftcode() {
       name="horizontal_login"
       autocomplete="off"
       :label-col="{ span: 6 }"
-    >
+    > 
+    <a-form-item :label="$t('Giftcode.event')" style="display: block">
+        <a-form-item name="event" no-style>
+          <a-input
+            class="w-full"
+            v-model:value="formData.event"
+          />
+        </a-form-item>
+      </a-form-item>
+
       <a-form-item :label="$t('Giftcode.numberOfuser')" style="display: block">
         <a-form-item name="input-number" no-style>
           <a-input-number

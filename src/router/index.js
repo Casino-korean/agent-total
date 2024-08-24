@@ -34,14 +34,14 @@ const routes = [
                 }
             },
 
-            // {
-            //     path: '/giftcode',
-            //     name: 'giftcode',
-            //     component: () => import("@/components/GiftCode/GiftCode.vue"),
-            //     meta: {
-            //         // title: "Giftcode"
-            //     }
-            // },
+            {
+                path: '/giftcode-list',
+                name: 'giftcode-list',
+                component: () => import("@/components/GiftCode/GiftCode.vue"),
+                meta: {
+                    // title: "Giftcode"
+                }
+            },
 
             {
                 path: '/giftcode-use-list',

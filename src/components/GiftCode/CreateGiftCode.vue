@@ -20,6 +20,7 @@ const formState = reactive({
   count: 0,
   code: "",
   amount: 0,
+  event: "",
 });
 const createAccountForm = ref(null);
 
@@ -63,6 +64,18 @@ async function onCreateGiftCode() {
             $t("Giftcode.limitedTime")
           }}</a-select-option>
         </a-select>
+      </a-form-item>
+
+      <a-form-item
+        :label="$t('Giftcode.event')"
+        name="event"
+        :rules="[{ required: true, message: $t('Giftcode.eventError') }]"
+      >
+        <a-input
+          v-model:value="formState.event"
+          :placeholder="$t('Giftcode.event')"
+        >
+        </a-input>
       </a-form-item>
 
       <a-form-item

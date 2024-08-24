@@ -30,6 +30,10 @@ const columns = [
       text === 0 ? $t("Giftcode.multipleUses") : $t("Giftcode.limitedTime"),
   },
   {
+    title: $t("Giftcode.event"),
+    dataIndex: "event"
+  },
+  {
     title: $t("Giftcode.code"),
     dataIndex: "code",
   },
@@ -164,6 +168,11 @@ getListGiftCode();
       $t("Giftcode.createGif")
     }}</a-button>
     <a-button @click="$router.go(-1)" class="ml-3"><ArrowLeftOutlined></ArrowLeftOutlined></a-button>
+    <div class="flex items-center w-full justify-end">
+      <a-descriptions-item>
+        {{$t("page")}} {{pagination.current + '-' + pagination.pageSize}} , {{ $t("haveALl") }} {{ tableData.total }} {{ $t("record") }}
+      </a-descriptions-item>
+    </div>
   </div>
   <div class="overflow-y-auto">
     <a-table

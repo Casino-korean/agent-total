@@ -221,7 +221,9 @@
     "change": "Thay đổi",
     "typeGif": "Loại Giftcode",
     "seletGif": "Chọn loại Giftcode",
-    "notiCodeErr": "Mã code không được để trống."
+    "notiCodeErr": "Mã code không được để trống.",
+    "event": "Sự kiện",
+    "eventError": "Vui lòng nhập tên sự kiện"
   },
   "Partner": {
     "title": "Người bán hàng",
@@ -454,5 +456,8 @@
   "placeAcoutName": "Vui lòng nhập số tài khoản của bạn",
   "placeAcOwen": "Vui lòng nhập tên chủ tài khoản",
   "ip": "White List",
-  "addWhiteList": "Thêm IP"
+  "addWhiteList": "Thêm IP",
+  "haveALl": "tổng cộng",
+  "record": "mẩu dữ liệu",
+  "page": "Mục"
 }
