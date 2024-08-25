@@ -87,7 +87,6 @@ async function onCreateGiftCode() {
             class="w-full"
             v-model:value="formState.count"
             :min="1"
-            :max="10"
           />
         </a-form-item>
       </a-form-item>

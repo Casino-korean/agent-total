@@ -17,6 +17,17 @@
       v-model:value="queryParams.agent"
     ></a-input>
      <a-input
+      :placeholder="$t('CSKH')"
+      class="w-[200px]"
+      v-model:value="queryParams.general"
+    ></a-input>
+    <a-select
+       :placeholder="$t('Transaction.userType')"
+      :options="optionUserType"
+      class="w-[200px]"
+      v-model:value="queryParams.type"
+    ></a-select>
+     <a-input
       :placeholder="'Level'"
       class="w-[200px]"
       type="number"
@@ -327,7 +338,15 @@ const queryParams = reactive({
   to: new Date(filterDate.value[1].format("YYYY-MM-DD 23:59:59")).toISOString(),
   s: null,
   id: null,
+  general: null, // dai ly tong
+  type: null
 });
+
+const optionUserType = [
+    { value: null, label: $t("all") },
+    { value: 'user', label: $t("user") },
+    { value: 'agent', label: $t("agent") },
+];
 
 const tableData = reactive({
   data: [],

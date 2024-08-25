@@ -123,7 +123,7 @@ const columns = [
 
   {
     title: $t("Giftcode.code"),
-    key: "gift_code",
+    dataIndex: "code",
   },
 
   {
