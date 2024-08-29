@@ -38,6 +38,11 @@
 <!--    ></a-select>-->
     <a-button @click="search" type="primary">{{ $t("search") }}</a-button>
     <a-button @click="$router.go(-1)" class="ml-3"><ArrowLeftOutlined></ArrowLeftOutlined></a-button>
+    <div class="flex items-center w-full justify-end">
+      <a-descriptions-item>
+        {{$t("page")}} {{pagination.current + '-' + pagination.pageSize}} , {{ $t("haveALl") }} {{ tableData.total }} {{ $t("record") }}
+      </a-descriptions-item>
+    </div>
   </div>
   <div class="overflow-y-auto">
     <a-table
@@ -48,9 +53,72 @@
       @change="handleTableChange"
     >
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'vip'">
-          <span>{{record?.vip || 0 }}</span>
-        </template>
+       <template v-if="column.dataIndex === 'username'">
+            <span :style="{ color: '#346597', fontWeight: 700 }">{{
+              record.username
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'displayName'">
+            <span :style="{ color: '#346597', fontWeight: 700 }">{{
+              record.displayName
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'commissionGame'">
+            <span :style="{ color: 'green', fontWeight: 700}">{{
+              formatNumber(record?.commissionGame ?? 0)
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'seq'">
+            <span :style="{ color: '#eca019', fontWeight: 700 }">{{
+                record.seq
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'phone'">
+            <span :style="{ color: '#a10ac7', fontWeight: 700 }">{{
+              record?.phone
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'money'">
+            <span :style="{ color: 'green', fontWeight: 700 }">{{
+              formatNumber(record?.money ?? 0)
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'userSum'">
+            <span :style="{ color: '#b94a48', fontWeight: 700 }">{{
+              record?.userSum
+            }}</span>
+          </template>
+          <template v-if="column.dataIndex === 'depositSum'">
+            <span :style="{ color: '#2a6395', fontWeight: 700 }">{{
+              formatNumber(record?.depositSum ?? 0)
+            }}</span>
+          </template>
+
+           <template v-if="column.dataIndex === 'vip'">
+            <span :style="{ color: 'red', fontWeight: 700 }">{{
+              record?.vip
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'orderSum'">
+            <span :style="{ color: '#820293', fontWeight: 700 }">{{
+              formatNumber(record?.orderSum ?? 0)
+            }}</span>
+          </template>
+
+           <template v-if="column.dataIndex === 'winLossSum'">
+            <span :style="{ color: record.winLossSum >= 0 ? 'green' : 'red' , fontWeight: 700 }">{{
+              formatNumber(record?.winLossSum ?? 0)
+            }}</span>
+          </template>
+
+          <template v-if="column.dataIndex === 'level'">
+            <span class="label label-default"> Cấp {{
+              record.level
+            }}</span>
+          </template>
         <template v-if="column.key === 'action'">
           <!-- <UserAction :data="record" @updated="(e) => onUpdated(record, e)" /> -->
           <!-- <SendPrivateLetter
@@ -178,11 +246,11 @@ const columns = [
     dataIndex: "orderSum",
     customRender: ({ text }) => formatNumber(text),
   },
-  // {
-  //   title: $t("User.totalWinLoss"),
-  //   dataIndex: "winLossSum",
-  //   customRender: ({ text }) => formatNumber(text),
-  // },
+  {
+    title: $t("User.totalWinLoss"),
+    dataIndex: "winLossSum",
+    customRender: ({ text }) => formatNumber(text),
+  },
   // {
   //   title: $t("User.commissionGame"),
   //   dataIndex: "commissionGame",

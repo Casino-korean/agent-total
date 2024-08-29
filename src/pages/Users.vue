@@ -212,6 +212,14 @@ const columns = [
     title: $t("User.typeAccount"),
     key: "role",
   },
+    {
+    title: $t("User.parent"),
+    key: "parent",
+  },
+  {
+    title: $t("User.phoneNumber"),
+    dataIndex: "phone",
+  },
   {
     title: $t("User.vip"),
     dataIndex: "vip",
@@ -224,16 +232,10 @@ const columns = [
     title: $t("User.userSum"),
     dataIndex: "userSum",
   },
-
   {
-    title: $t("User.level"),
-    dataIndex: "level"
+    title: $t("User.wallet"),
+    dataIndex: "money"
   },
-  // {
-  //   title: $t("User.wallet"),
-  //   dataIndex: "money",
-  //   customRender: ({ text }) => formatNumber(text),
-  // },
   {
     title: $t("User.totalDeposit"),
     dataIndex: "depositSum",
@@ -259,34 +261,30 @@ const columns = [
     dataIndex: "commissionGame",
     customRender: ({ text }) => formatNumber(text),
   },
-  // {
-  //   title: $t("User.gameRound"),
-  //   dataIndex: "gameSum",
-  //   customRender: ({ text }) => formatNumber(text),
-  // },
   {
-    title: $t("User.moneyFromGiftcode"),
-    dataIndex: "giftcodeSum",
-    customRender: ({ text }) => formatNumber(text),
+    title: $t("User.bankName"),
+    dataIndex: "bankName",
   },
-  // {
-  //   title: $t("User.bankName"),
-  //   dataIndex: "bankName",
-  // },
-  // {
-  //   title: $t("User.accountNumber"),
-  //   dataIndex: "accountNumber",
-  // },
-  // {
-  //   title: $t("User.accountName"),
-  //   dataIndex: "accountName",
-  // },
+  {
+    title: $t("User.accountNumber"),
+    dataIndex: "accountNumber",
+  },
+  {
+    title: $t("User.accountName"),
+    dataIndex: "accountName",
+  },
 
   {
     title: $t("User.accountCreateDate"),
     dataIndex: "createdAt",
     customRender: ({ text }) => formatDateTime(text),
   },
+
+  {
+    title: $t("User.level"),
+    dataIndex: "level"
+  },
+
   {
     title: $t("User.action"),
     key: "action",
