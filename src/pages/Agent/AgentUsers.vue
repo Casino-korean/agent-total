@@ -6,11 +6,11 @@
 <!--      class="w-[200px]"-->
 <!--      v-model:value="queryParams.id"-->
 <!--    ></a-input>-->
-<!--    <a-input-->
-<!--      :placeholder="$t('searchByUsername')"-->
-<!--      class="w-[200px]"-->
-<!--      v-model:value="queryParams.s"-->
-<!--    ></a-input>-->
+    <a-input
+      :placeholder="$t('searchByUsername')"
+      class="w-[200px]"
+      v-model:value="queryParams.s"
+    ></a-input>
     <a-input
       :placeholder="$t('userAgent')"
       class="w-[200px]"
