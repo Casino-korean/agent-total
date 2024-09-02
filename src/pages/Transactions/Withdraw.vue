@@ -1,26 +1,25 @@
 <template>
   <div class="flex flex-wrap justify-center">
       <div style="background: #ececec; padding: 10px">
-        <a-card class="text-center" title="Tổng nạp thành công" :bordered="false" style="width: 350px">
+        <a-card class="text-center" title="Tổng rút thành công" :bordered="false" style="width: 350px">
           <p class="text-2xl font-bold" :style="{color: 'green'}">
             {{ formatNumber(totalAmountSuccess) }}
           </p>
         </a-card>
       </div>
         <div style="background: #ececec; padding: 10px">
-        <a-card class="text-center" :title="$t('Tổng nạp chờ duyệt')" :bordered="false" style="width: 350px">
+        <a-card class="text-center" :title="$t('Tổng rút chờ duyệt')" :bordered="false" style="width: 350px">
           <p class="text-2xl font-bold" :style="{color: 'orange'}">
             {{ formatNumber(totalAmountPending) }}
           </p>
         </a-card>
       </div>
         <div style="background: #ececec; padding: 10px">
-        <a-card class="text-center" :title="$t('Tổng nạp thất bại')" :bordered="false" style="width: 350px">
+        <a-card class="text-center" :title="$t('Tổng rút thất bại')" :bordered="false" style="width: 350px">
           <p class="text-2xl font-bold" :style="{color: 'red'}">
             {{ formatNumber(totalAmountCancel) }}
           </p>
-        </a-card>
-      </div>
+        </a-card></div>
     </div>
   <div class="flex flex-wrap gap-4 my-2">
     <a-input
