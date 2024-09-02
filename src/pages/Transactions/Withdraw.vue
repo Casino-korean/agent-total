@@ -1,23 +1,41 @@
 <template>
+  <div class="flex flex-wrap justify-center">
+      <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" title="Tổng nạp thành công" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'green'}">
+            {{ formatNumber(totalAmountSuccess) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Tổng nạp chờ duyệt')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'orange'}">
+            {{ formatNumber(totalAmountPending) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Tổng nạp thất bại')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'red'}">
+            {{ formatNumber(totalAmountCancel) }}
+          </p>
+        </a-card>
+      </div>
+    </div>
   <div class="flex flex-wrap gap-4 my-2">
-<!--    <a-input-->
-<!--      placeholder="ID"-->
-<!--      class="w-[200px]"-->
-<!--      v-model:value="queryParams.id"-->
-<!--    ></a-input>-->
     <a-input
       :placeholder="$t('searchByUsername')"
       class="w-[200px]"
       v-model:value="queryParams.username"
     ></a-input>
-     <a-select
+    <a-select
        :placeholder="$t('Transaction.typeMoney')"
       :options="optionMoney"
       class="w-[200px]"
       v-model:value="queryParams.typeMoney"
     ></a-select>
      <a-select
-       :placeholder="$t('Transaction.status')"
+      :placeholder="$t('Transaction.status')"
       :options="optionStatus"
       class="w-[200px]"
       v-model:value="queryParams.status"
@@ -34,7 +52,7 @@
       class="w-[200px]"
       v-model:value="queryParams.typeUser"
     ></a-select>
-    <a-button @click="search" type="primary">{{ $t("search") }}</a-button>
+    <a-button @click="search" type="primary"> {{ $t("search") }} </a-button>
     <a-button @click="reload" class="ml-3"><ReloadOutlined></ReloadOutlined></a-button>
     <a-button @click="$router.go(-1)" class="ml-3"><ArrowLeftOutlined></ArrowLeftOutlined></a-button>
   </div>
@@ -46,7 +64,10 @@
       :loading="tableData.loading"
       @change="handleTableChange"
     >
-      <template #bodyCell="{ column, record }">
+      <template #bodyCell="{ column, record, index }">
+        <template v-if="column.key === 'stt'">
+          <span> {{index + 1 + (pagination.current-1)*pagination.pageSize}}</span>
+        </template>
         <template v-if="column.key === 'bank'">
           <div>
             {{ $t("bank") }} :
@@ -95,6 +116,10 @@ import { useI18n } from "vue-i18n";
 const { t: $t } = useI18n({ useScope: "global" });
 
 const columns = [
+  //  {
+  //   title: "STT",
+  //   key: "stt"
+  // },
   {
     title: $t("User.title"),
     dataIndex: "user",
@@ -105,7 +130,6 @@ const columns = [
     dataIndex: "user",
     customRender: ({ text: user }) => user.displayName,
   },
-
   {
     title: $t("LoginHistory.surplus"),
     dataIndex: "balance",
@@ -117,13 +141,11 @@ const columns = [
     dataIndex: "amount",
     customRender: ({ text }) => formatNumber(text),
   },
-
   {
     title: $t("Transaction.typeMoney"),
     dataIndex: "typeMoney",
     customRender: ({ text }) => text?.toUpperCase(),
   },
-
   {
     title: $t("Bank.status"),
     key: "status",
@@ -143,7 +165,7 @@ const columns = [
     dataIndex: "createdAt",
     customRender: ({ text }) => formatDateTime(text),
   },
-
+  //
   {
     title: $t("action"),
     key: "action",
@@ -154,6 +176,9 @@ const columns = [
 
 const showReport = ref(false);
 const userSelected = ref(null);
+const totalAmountSuccess = ref(0)
+const totalAmountPending = ref(0)
+const totalAmountCancel = ref(0)
 
 const filterDate = ref([dayjs().startOf("month"), dayjs()]);
 
@@ -180,9 +205,6 @@ const dateOptions = [
     startDate: () => "",
   },
 ];
-
-const dateSelect = ref(dateOptions[2].value);
-
 const optionStatus = [
     { value: 1, label: $t("success") },
     { value: 2, label: $t("lose") },
@@ -199,7 +221,7 @@ const optionUserType = [
     { value: 'user', label: $t("user") },
     { value: 'agent', label: $t("agent") },
 ];
-
+const dateSelect = ref(dateOptions[2].value);
 
 function onChangeSelectDate(value, option) {
   filterDate.value[0] = option.startDate();
@@ -248,43 +270,46 @@ const getTransactionList = async () => {
   }
 };
 
+const getTransactionTotal = async () => {
+  try {
+    totalAmountCancel.value = 0
+    totalAmountSuccess.value = 0
+    totalAmountPending.value = 0
+    tableData.loading = true;
+    const res = await request.get(api.TRANSACTIONS_TOTAL + "/withdraw", {
+      params: queryParams,
+    });
+    if (res.ok) {
+      res.d.forEach((data) => {
+        switch (data._id) {
+          case 2:
+            totalAmountCancel.value = data.total;
+            break;
+          case 1:
+            totalAmountSuccess.value = data.total;
+            break;
+          case 0:
+            totalAmountPending.value = data.total;
+            break;
+          default:
+            break;
+        }
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    tableData.loading = false;
+  }
+};
+
 const handleTableChange = async (pag, _, __) => {
   const { current, pageSize, total } = pag;
   queryParams.page = current;
   queryParams.limit = pageSize;
   tableData.total = total;
-  getTransactionList();
+  await getTransactionList();
 };
-
-const onCloseHistory = () => {
-  showHistory.value = false;
-};
-
-const search = () => {
-  if (filterDate.value) {
-    queryParams.from = new Date(
-      filterDate.value[0].format("YYYY-MM-DD 00:00:00")
-    ).toISOString();
-    queryParams.to = new Date(
-      filterDate.value[1].format("YYYY-MM-DD 23:59:59")
-    ).toISOString();
-  }
-  queryParams.page = 1;
-  getTransactionList();
-};
-
-function statusText(status) {
-  switch (status) {
-    case 0:
-      return $t("Bank.pending");
-    case 1:
-      return $t("Bank.success");
-    case 2:
-      return $t("Bank.loss");
-    default:
-      return status;
-  }
-}
 
 const reload = () => {
   filterDate.value = [dayjs().startOf("month"), dayjs()];
@@ -300,6 +325,34 @@ const reload = () => {
   queryParams.status = null;
   queryParams.typeMoney = null;
   getTransactionList();
+  getTransactionTotal();
+}
+
+const search = () => {
+  if (filterDate.value) {
+    queryParams.from = new Date(
+      filterDate.value[0].format("YYYY-MM-DD 00:00:00")
+    ).toISOString();
+    queryParams.to = new Date(
+      filterDate.value[1].format("YYYY-MM-DD 23:59:59")
+    ).toISOString();
+  }
+  queryParams.page = 1;
+  getTransactionList();
+  getTransactionTotal();
+};
+
+function statusText(status) {
+  switch (status) {
+    case 0:
+      return $t("Bank.pending");
+    case 1:
+      return $t("Bank.success");
+    case 2:
+      return $t("Bank.loss");
+    default:
+      return status;
+  }
 }
 
 function statusColor(status) {
@@ -317,7 +370,9 @@ function statusColor(status) {
 
 function onUpdated(record, payload) {
   getTransactionList();
+  getTransactionTotal();
 }
 
 getTransactionList();
+getTransactionTotal();
 </script>

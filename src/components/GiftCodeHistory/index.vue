@@ -1,4 +1,34 @@
 <template>
+   <div class="flex flex-wrap justify-center">
+      <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" title="Số lượng đã duyệt" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'green'}">
+            {{ formatNumber(totalSuccess) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Số tiền đã duyệt')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'green'}">
+            {{ formatNumber(totalAmountSuccess) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Số lượng chờ duyệt')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'orange'}">
+            {{ formatNumber(totalPending) }}
+          </p>
+        </a-card>
+      </div>
+    <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Số tiền chờ duyệt')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'orange'}">
+            {{ formatNumber(totalAmountPending) }}
+          </p>
+        </a-card>
+      </div>
+    </div>
   <div class="flex flex-wrap gap-4 my-2">
     <a-input
       :placeholder="$t('searchByUsername')"
@@ -22,6 +52,12 @@
       :options="dateOptions"
       v-model:value="dateSelect"
       @change="onChangeSelectDate"
+    ></a-select>
+    <a-select
+      :placeholder="$t('Transaction.status')"
+      :options="optionStatus"
+      class="w-[200px]"
+      v-model:value="queryParams.status"
     ></a-select>
 <!--    <a-select-->
 <!--       :placeholder="$t('Transaction.userType')"-->
@@ -162,6 +198,10 @@ const columns = [
 
 const showReport = ref(false);
 const userSelected = ref(null);
+const totalAmountPending = ref(0);
+const totalPending = ref(0);
+const totalSuccess = ref(0);
+const totalAmountSuccess = ref(0);
 
 const filterDate = ref([dayjs().startOf("month"), dayjs()]);
 
@@ -190,7 +230,6 @@ const dateOptions = [
 ];
 const optionStatus = [
     { value: 1, label: $t("success") },
-    { value: 2, label: $t("lose") },
     { value: 0, label: $t("pending") },
     { value: null, label: $t("all") }
 ];
@@ -217,8 +256,8 @@ const queryParams = reactive({
     filterDate.value[0].format("YYYY-MM-DD 00:00:00")
   ).toISOString(),
   to: new Date(filterDate.value[1].format("YYYY-MM-DD 23:59:59")).toISOString(),
-  s: null
-  // status: null,
+  s: null,
+  status: null,
   // typeMoney: null,
   // typeUser: null
 });
@@ -253,6 +292,29 @@ const getHistoryUseGift = async () => {
   }
 };
 
+const getGiftcodeTotal = async () => {
+  try {
+    totalPending.value = 0
+    totalSuccess.value = 0
+    totalAmountSuccess.value = 0
+    totalAmountPending.value = 0
+    tableData.loading = true;
+    const res = await request.get(api.GIFTCODE_TOTAL, {
+      params: queryParams,
+    });
+    if (res.ok) {
+      totalPending.value  = res.d.totalGiftCodePending
+      totalSuccess.value  = res.d.totalGiftCodeSuccess
+      totalAmountSuccess.value  = res.d.totalMoneySuccess
+      totalAmountPending.value  = res.d.totalMoneyPending
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    tableData.loading = false;
+  }
+};
+
 const handleTableChange = async (pag, _, __) => {
   const { current, pageSize, total } = pag;
   queryParams.page = current;
@@ -272,6 +334,7 @@ const reload = () => {
   ).toISOString();
   queryParams.s = null;
   getHistoryUseGift();
+  getGiftcodeTotal();
 }
 
 const search = () => {
@@ -285,6 +348,7 @@ const search = () => {
   }
   queryParams.page = 1;
   getHistoryUseGift();
+  getGiftcodeTotal();
 };
 
 function statusText(status) {
@@ -315,7 +379,9 @@ function statusColor(status) {
 
 function onUpdated(record, payload) {
   getHistoryUseGift();
+  getGiftcodeTotal();
 }
 
 getHistoryUseGift();
+getGiftcodeTotal();
 </script>

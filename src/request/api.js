@@ -19,6 +19,7 @@ export default {
     // AGENT_GLOBALTRANSFERMONEY: "admin/agent/global",
     // TRANSACTION: "admin/transaction",
     TRANSACTIONS_LIST: "general-agent/transaction/history",
+    TRANSACTIONS_TOTAL: "general-agent/transaction/total",
     TRANSACTIONS_APPROVE: "general-agent/transaction/approve",
     TRANSACTIONS_ADD_MONEY: "general-agent/transaction/add-subtract-money",
     // TRANSACTIONS_TRANSFER_LIST: "admin/transfer/history",
@@ -49,6 +50,7 @@ export default {
     //
     // //giftCode
     GIFTCODE: "general-agent/giftcode",
+    GIFTCODE_TOTAL: "general-agent/giftcode/total",
     GIFTCODE_LIST: "general-agent/giftcode/lists",
     GIFTCODE_CREATE: "general-agent/giftcode/create",
     GIFTCODE_CHANGE: "general-agent/giftcode/change",

@@ -1,4 +1,27 @@
 <template>
+  <div class="flex flex-wrap justify-center">
+      <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" title="Tổng nạp thành công" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'green'}">
+            {{ formatNumber(totalAmountSuccess) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Tổng nạp chờ duyệt')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'orange'}">
+            {{ formatNumber(totalAmountPending) }}
+          </p>
+        </a-card>
+      </div>
+        <div style="background: #ececec; padding: 10px">
+        <a-card class="text-center" :title="$t('Tổng nạp thất bại')" :bordered="false" style="width: 350px">
+          <p class="text-2xl font-bold" :style="{color: 'red'}">
+            {{ formatNumber(totalAmountCancel) }}
+          </p>
+        </a-card>
+      </div>
+    </div>
   <div class="flex flex-wrap gap-4 my-2">
     <a-input
       :placeholder="$t('searchByUsername')"
@@ -153,6 +176,9 @@ const columns = [
 
 const showReport = ref(false);
 const userSelected = ref(null);
+const totalAmountSuccess = ref(0)
+const totalAmountPending = ref(0)
+const totalAmountCancel = ref(0)
 
 const filterDate = ref([dayjs().startOf("month"), dayjs()]);
 
@@ -244,12 +270,45 @@ const getTransactionList = async () => {
   }
 };
 
+const getTransactionTotal = async () => {
+  try {
+    totalAmountCancel.value = 0
+    totalAmountSuccess.value = 0
+    totalAmountPending.value = 0
+    tableData.loading = true;
+    const res = await request.get(api.TRANSACTIONS_TOTAL + "/deposit", {
+      params: queryParams,
+    });
+    if (res.ok) {
+      res.d.forEach((data) => {
+        switch (data._id) {
+          case 2:
+            totalAmountCancel.value = data.total;
+            break;
+          case 1:
+            totalAmountSuccess.value = data.total;
+            break;
+          case 0:
+            totalAmountPending.value = data.total;
+            break;
+          default:
+            break;
+        }
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    tableData.loading = false;
+  }
+};
+
 const handleTableChange = async (pag, _, __) => {
   const { current, pageSize, total } = pag;
   queryParams.page = current;
   queryParams.limit = pageSize;
   tableData.total = total;
-  getTransactionList();
+  await getTransactionList();
 };
 
 const reload = () => {
@@ -266,6 +325,7 @@ const reload = () => {
   queryParams.status = null;
   queryParams.typeMoney = null;
   getTransactionList();
+  getTransactionTotal();
 }
 
 const search = () => {
@@ -279,6 +339,7 @@ const search = () => {
   }
   queryParams.page = 1;
   getTransactionList();
+  getTransactionTotal();
 };
 
 function statusText(status) {
@@ -309,7 +370,9 @@ function statusColor(status) {
 
 function onUpdated(record, payload) {
   getTransactionList();
+  getTransactionTotal();
 }
 
 getTransactionList();
+getTransactionTotal();
 </script>
