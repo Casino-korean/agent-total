@@ -257,7 +257,7 @@ const showEditModalAgent = ref(false);
 const showModalAgentTransfer = ref(false);
 const listAgents = ref([])
 const users = userStore.getUserInfo()
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const queryParams = reactive({
   page: 1,

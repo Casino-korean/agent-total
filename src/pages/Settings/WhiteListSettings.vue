@@ -75,7 +75,7 @@ const showReport = ref(false);
 const userSelected = ref(null);
 const showCreateIp = ref(false);
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const queryParams = reactive({
   page: 1,

@@ -180,7 +180,7 @@ const totalAmountSuccess = ref(0)
 const totalAmountPending = ref(0)
 const totalAmountCancel = ref(0)
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const dateOptions = [
   {
@@ -221,7 +221,7 @@ const optionUserType = [
     { value: 'user', label: $t("user") },
     { value: 'agent', label: $t("agent") },
 ];
-const dateSelect = ref(dateOptions[2].value);
+const dateSelect = ref(dateOptions[0].value);
 
 function onChangeSelectDate(value, option) {
   filterDate.value[0] = option.startDate();

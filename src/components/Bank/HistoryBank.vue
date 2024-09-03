@@ -118,7 +118,7 @@ const columns = [
   },
 ];
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const queryParams = reactive({
   page: 1,

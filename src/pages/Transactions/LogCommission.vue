@@ -106,7 +106,7 @@ const columns = [
   }
 ];
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const dateOptions = [
   {
@@ -136,7 +136,7 @@ const onChangeSelectDate = (value, option) => {
   filterDate.value[0] = option.startDate();
 }
 
-const dateSelect = ref(dateOptions[2].value);
+const dateSelect = ref(dateOptions[0].value);
 
 const queryParams = reactive({
   page: 1,

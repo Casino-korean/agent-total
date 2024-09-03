@@ -18,7 +18,7 @@ function closeModal() {
   getListHistoryPlay();
 }
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 const dateOptions = [
   {
     value: "today",
@@ -87,7 +87,7 @@ const columns = [
     customRender: ({ text }) => formatDateTime(text),
   },
 ];
-const dateSelect = ref(dateOptions[2].value);
+const dateSelect = ref(dateOptions[0].value);
 function onChangeSelectDate(value, option) {
   filterDate.value[0] = option.startDate();
 }

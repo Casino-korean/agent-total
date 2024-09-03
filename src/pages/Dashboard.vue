@@ -11,7 +11,7 @@ import { useI18n } from "vue-i18n";
 import {ArrowLeftOutlined} from "@ant-design/icons-vue";
 const { t: $t } = useI18n({ useScope: "global" });
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const dateOptions = [
   {
@@ -37,7 +37,7 @@ const dateOptions = [
   },
 ];
 
-const dateSelect = ref(dateOptions[2].value);
+const dateSelect = ref(dateOptions[0].value);
 
 function onChangeSelectDate(value, option) {
   filterDate.value[0] = option.startDate();

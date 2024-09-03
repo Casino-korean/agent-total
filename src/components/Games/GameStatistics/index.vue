@@ -55,7 +55,7 @@ import {ArrowLeftOutlined} from "@ant-design/icons-vue";
 
 const { t: $t } = useI18n({ useScope: "global" });
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 const queryParams = reactive({
   page: 1,
   limit: 10,

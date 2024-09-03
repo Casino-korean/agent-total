@@ -20,7 +20,7 @@ const isShowModalCreateGiftCode = ref(false);
 const isShowModalChangeGiftcode = ref(false);
 const showDeleteGiftCode = ref(false);
 
-const filterDate = ref([dayjs().startOf("month"), dayjs()]);
+const filterDate = ref([dayjs().startOf("days"), dayjs()]);
 
 const columns = [
   {
