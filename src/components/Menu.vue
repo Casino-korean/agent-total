@@ -192,12 +192,12 @@ const menuItems = [
     ]
   },
 
-  // {
-  //   key: "login-logs",
-  //   icon: UsergroupAddOutlined,
-  //   label: $t("LoginHistory.title"),
-  //   routeName: "login-logs",
-  // },
+  {
+    key: "login-logs",
+    icon: UsergroupAddOutlined,
+    label: $t("LoginHistory.title"),
+    routeName: "login-logs",
+  },
   //     {
   //       key: "settings-admin",
   //       label: $t("settingAgent"),

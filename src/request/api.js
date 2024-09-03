@@ -69,7 +69,7 @@ export default {
     USER_HISTORYPLAY: "general-agent/order/history",
     //
     // // login logs
-    // LOGIN_LOGS: "admin/history/login",
+    LOGIN_LOGS: "general-agent/history/login",
     //
     // FANPAGE: "admin/fanpage",
     // GROUP: "admin/group",
